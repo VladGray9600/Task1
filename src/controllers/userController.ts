@@ -17,7 +17,6 @@ export const getAllUsers = async (req, res) => {
 //=====================  Registration ===================================
 
 export const signUp = async (req, res) => {
-    //Создаем  repository
     const userRepository = getRepository(User)
     const { name, email, password, role } = req.body;
     const user = new User()

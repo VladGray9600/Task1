@@ -20,7 +20,6 @@ export const createArticle = async (req, res) => {
     const { title, content } = req.body
     const articleRepository = getRepository(Article)
     const user = req.user;
-    console.log(user);
     const newArticle = { title, content, author_id: user.id }
     const article = await articleRepository.create(newArticle);
     const results = await articleRepository.save(article);
