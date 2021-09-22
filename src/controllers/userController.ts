@@ -2,8 +2,6 @@ import { getRepository } from "typeorm"
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 import { User } from "../entity/User"
-import { json } from "body-parser"
-import { config } from "process"
 
 
 //===============      Get all users   ==========================
