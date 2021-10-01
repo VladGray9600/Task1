@@ -39,11 +39,9 @@ export const getCommFromArt = async (req, res) => {
 export const createComment = async (req, res) => {
     const commentRepository = getRepository(Comment)
     const { content } = req.body
-    const user = await getRepository(User).findOne({id: req.user.id});
-    if(!user) req.status(400).send("User not found")
     const article = await getRepository(Article).findOne({id: req.params.article_id});
     if(!article) res.status(404).send("Article not found")
-    const comment = commentRepository.create({content, user_id: user.id, article_id: article.id});
+    const comment = commentRepository.create({content, article_id: article.id});
     console.log(comment)
     const result = await commentRepository.save(comment);
     console.log(result)

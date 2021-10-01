@@ -21,14 +21,14 @@ export const signUp = async (req, res) => {
     user.name = name
     user.email = email
     user.role = role
-    user.password = bcrypt.hashSync(password, 10)
+    user.password = await bcrypt.hashSync(password, 10)
     const userRepeat = await userRepository.findOne({email: req.body.email});
     if(!userRepeat){
         const results = await userRepository.save(user)
         console.log(results);
-        return res.send({message : `Регистрация прошла успешно.`});
+        return res.send({message : `Registration is succesfull `});
     } else {
-        return res.send({message : `Пользователь с таким email уже существует.`})
+        return res.send({message : `User with this ${email} is already exists.`})
     }
    
 }
@@ -39,15 +39,16 @@ export const signIn = async (req, res) => {
     const { email, password } =  req.body;
     //Проверка существует ли данный email
     const user = await userRepository.findOne({email: email});
-    if (!user) return res.status(400).send('Email неверный');
+    if (!user) return res.status(404).send('User is not Found');
     //Проверка правильности пароля
     const validPass = await bcrypt.compare(password, user.password);
-    if(!validPass) return res.status(400).send('Неверный пароль');
+    if(!validPass) return res.status(401).send('Unauthorized');
     //Создание и присваивание токена
     const token = jwt.sign({id: user.id, name: user.name, role: user.role}, process.env.TOKEN_SECRET);
     res.header('auth-token', token).send(token);
     res.send('Logged in!');
 }
+
 
 
 //==============    Get user by ID ===================================

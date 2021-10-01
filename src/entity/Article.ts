@@ -15,10 +15,8 @@ export class Article {
     content: string;
 
     @Column()
-    author_id: string;
+    author: string;
 
     @ManyToOne(() => User, user => user.article)
     user: User;
-
-
 }

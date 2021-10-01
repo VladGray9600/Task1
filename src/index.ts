@@ -7,10 +7,6 @@ const bodyParser = require('body-parser')
 
 
 
-
-
-
-
 //=======   Middlewares
 
 app.use(express.json());
